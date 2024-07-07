@@ -10,6 +10,21 @@
 
 header{
   border-bottom: 1px solid #0000003b; /* 2px solid black line */
+}
 
+.header-auth::before {
+  content: "";
+  display: inline-block;
+  height: 20px; /* Adjust the height as needed */
+  width: 1px; /* This will be the width of the vertical line */
+  background-color: #0000002d; /* Color of the line */
+  margin-left: 10px; /* Space from the navigation-pill */
+  vertical-align: middle; /* Aligns the line in the middle vertically */
+}
 
+.horizontal-line {
+  height: 1px; /* Make the element's height to 0 */
+  width: 1250px;
+  border-top: 1px solid #0000001f; /* Adjust the thickness and color as needed */
+  margin: 20px 0; /* Add some vertical space around the line */
 }
