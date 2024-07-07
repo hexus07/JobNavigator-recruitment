@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Lato-Black'; /* Name your font family */
+  src: url('../assets/fonts/Lato/Lato-Regular.ttf'); /* Locate the .ttf file within your directory*/
+}
+
+
+header{
+  border-bottom: 1px solid #0000003b; /* 2px solid black line */
+
+
+}
