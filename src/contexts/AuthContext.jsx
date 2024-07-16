@@ -6,10 +6,16 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { createUser } from "../api/database"; // Import your createUser function
+import { createUser, createCompany } from "../api/database"; // Import your createUser function
 import { getDatabase, ref, get } from "firebase/database";
+import { useId } from "react";
+
 import PropTypes from "prop-types";
 const AuthContext = createContext();
+
+const generateId = () => {
+  return Math.random().toString(36).substr(2, 9);
+};
 
 export const useAuth = () => {
   return useContext(AuthContext);
@@ -52,6 +58,10 @@ export const AuthProvider = ({ children }) => {
     await createUser(userCredential.user.uid, email, fullName, role);
   };
 
+  const registerCompany = async (name, description, hrId) => {
+    const companyId = generateId();
+    await createCompany(companyId, name, description, hrId);
+  };
   const loginUser = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -66,6 +76,7 @@ export const AuthProvider = ({ children }) => {
     registerUser,
     loginUser,
     logoutUser,
+    registerCompany,
   };
 
   return (

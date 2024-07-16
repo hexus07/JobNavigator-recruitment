@@ -30,7 +30,7 @@ const Login = () => {
       const userRole = await getRole(user.uid);
       console.log("User role:", userRole);
       if (userRole === "recruiter") {
-        navigate("/hr-console");
+        navigate("/company-registration");
       } else {
         navigate("/user-dashboard");
       }

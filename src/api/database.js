@@ -1,6 +1,6 @@
 import { database } from "./firebase";
 import { ref, set, get, child } from "firebase/database";
-
+import { useId } from "react";
 export const createUser = async (userId, email, fullName, role) => {
   await set(ref(database, "users/" + userId), {
     email,
@@ -9,10 +9,32 @@ export const createUser = async (userId, email, fullName, role) => {
   });
 };
 
-export const createPosition = async (positionId, title, description, hrId) => {
+export const createCompany = async (companyId, name, description, hrId) => {
+  await set(ref(database, "companies/" + companyId), {
+    name,
+    description,
+    hr_id: hrId,
+  });
+};
+
+export const createPosition = async (
+  title,
+  description,
+  hrId,
+  tags,
+  city,
+  companyId,
+  type
+) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const positionId = useId();
   await set(ref(database, "positions/" + positionId), {
+    companyId,
+    city,
+    type,
     title,
     description,
+    tags,
     hr_id: hrId,
   });
 };
