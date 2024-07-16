@@ -1,11 +1,11 @@
-// eslint-disable-next-line no-unused-vars
-import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "../pages/Login.jsx";
-import Register from "../pages/Register.jsx";
-import Home from "../pages/Home.jsx";
-import CompanyDetail from "../pages/CompanyDetail.jsx";
-import NotFound from "../pages/NotFound.jsx";
+import { AuthProvider } from "../contexts/AuthContext";
+import PrivateRouter from "./PrivateRouter";
+import Home from "../pages/Home";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import HrConsole from "../pages/HrConsole";
+import UserDashboard from "../pages/UserDashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,15 +21,29 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "/company/:id",
-    element: <CompanyDetail />,
+    path: "/hr-console",
+    element: (
+      <PrivateRouter requiredRole="recruiter">
+        <HrConsole />
+      </PrivateRouter>
+    ),
   },
   {
-    path: "*",
-    element: <NotFound />,
+    path: "/user-dashboard",
+    element: (
+      <PrivateRouter requiredRole="jobSeeker">
+        <UserDashboard />
+      </PrivateRouter>
+    ),
   },
 ]);
 
-const Routes = () => <RouterProvider router={router} />;
+function App() {
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
+}
 
-export default Routes;
+export default App;

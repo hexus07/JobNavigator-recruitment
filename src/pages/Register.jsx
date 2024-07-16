@@ -1,15 +1,18 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { registerUser } from "../api/auth";
-import { createUser } from "../api/database";
-import PropTypes from "prop-types";
+import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [fullName, setFullName] = useState(""); // Add this line
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
   const [showModal, setShowModal] = useState(true);
   const [userType, setUserType] = useState(null);
+
+  const { registerUser } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userType === "recruiter") {
@@ -17,14 +20,13 @@ const Register = () => {
     } else if (userType === "jobSeeker") {
       setRole("jobSeeker");
     }
-  }, [userType]); // This effect runs only when userType changes.
+  }, [userType]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const user = await registerUser(email, password);
-      await createUser(user.uid, email, fullName, role);
-      // Redirect to login page or dashboard
+      await registerUser(email, password, fullName, role);
+      navigate("/login");
     } catch (error) {
       console.error("Register error:", error);
     }
@@ -84,6 +86,7 @@ const Register = () => {
     </div>
   );
 };
+
 const RecruiterForm = ({
   email,
   password,
@@ -191,7 +194,5 @@ const JobSeekerForm = ({
     </form>
   </div>
 );
-
-// Add prop types for RecruiterForm and JobSeekerForm
 
 export default Register;

@@ -17,6 +17,16 @@ export const createPosition = async (positionId, title, description, hrId) => {
   });
 };
 
+export const getRole = async (userId) => {
+  const dbRef = ref(database);
+  const snapshot = await get(child(dbRef, `users/${userId}/role`));
+  if (snapshot.exists()) {
+    return snapshot.val();
+  } else {
+    console.log("No data available");
+  }
+};
+
 export const getPosition = async (positionId) => {
   const dbRef = ref(database);
   const snapshot = await get(child(dbRef, `positions/${positionId}`));
